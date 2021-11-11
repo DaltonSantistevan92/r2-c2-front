@@ -1,26 +1,25 @@
-
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
+    <div class="wrapper">
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <!-- <li class="nav-item d-none d-sm-inline-block">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <!-- <li class="nav-item d-none d-sm-inline-block">
         <a href="index3.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
       </li> -->
-    </ul>
+            </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <!-- <li class="nav-item">
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+                <!-- <li class="nav-item">
         <a class="nav-link" data-widget="navbar-search" href="#" role="button">
           <i class="fas fa-search"></i>
         </a>
@@ -41,8 +40,8 @@
         </div>
       </li> -->
 
-      <!-- Messages Dropdown Menu -->
-      <!-- <li class="nav-item dropdown">
+                <!-- Messages Dropdown Menu -->
+                <!-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
@@ -100,8 +99,8 @@
         </div>
       </li> -->
 
-      <!-- Notifications Dropdown Menu -->
-      <!-- <li class="nav-item dropdown">
+                <!-- Notifications Dropdown Menu -->
+                <!-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">15</span>
@@ -128,21 +127,140 @@
         </div>
       </li> -->
 
-      <!-- <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li> -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" role="button" id="sesion-logout">
-          <i class="fas fa-sign-out-alt"></i>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
+                <li>
+                    <a class="btn btn-primary" data-toggle="modal" data-target="#modal-periodo" data-backdrop="static"
+                        data->Nuevo Período</a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" role="button" id="sesion-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Modales -->
+        <div class="modal fade" id="modal-periodo">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content" style="width: 950px !important;">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title">Períodos</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <div class="card card-dark">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Nuevo Período</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                    </div>
+                                    <!--form-nuevo-descripcion /.card-header -->
+                                    <div class="card-body">
+                                        <form method="POST" id="form-nuevo-periodo">
+                                            <div class="form-group">
+                                                <label for="">Periodo</label>
+                                                <input type="text" class="form-control" placeholder="Ejemplo: 2021"
+                                                    id="form-periodo">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Desde</label>
+                                                <input type="date" id="form-desde" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="">Hasta</label>
+                                                <input name="" type="date" id="form-hasta" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary" id="btn-form-periodo">
+                                                    <i class="fa fa-plus mr-2"></i>
+                                                    Agregar Período
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="card">
+                                    <div class="card-header" style="background-color: #343a40; color: #fff;">
+                                        <h3 class="card-title">Lista de Períodos</h3>
+
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                                    class="fas fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <!-- /.card-tools -->
+                                    </div>
+
+                                    <!-- /.card-header -->
+                                    <div class="card-body alto-table-roles">
+                                        <div class="card-body table-responsive p-0">
+                                            <table class="table table-hover text-nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Período</th>
+                                                        <th>Desde</th>
+                                                        <th>Hasta</th>
+                                                        <th>Acciones</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table-periodo">
+                                                    <!-- <tr>
+                          <td>1</td>
+                          <td>Administrador</td>
+                          <td>
+                            <div><button class="btn btn-purple">
+                                <i class="fa fa-edit"></i>
+                              </button>
+                            </div>
+                          </td>
+
+                          <td>
+                            <div><button class="btn btn-dark">
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr> -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <!-- /.card-body -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>

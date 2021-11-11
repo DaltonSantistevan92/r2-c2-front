@@ -22,7 +22,7 @@
                         <td>${i}</td>
                         <td>${element.rol}</td>
                         <td>
-                          <div><button class="btn btn-purple btn-sm" onclick="editar(${element.id})">
+                          <div><button class="btn btn-primary btn-sm" onclick="editar(${element.id})">
                               <i class="fa fa-edit"></i>
                             </button>
                           </div>
@@ -74,12 +74,13 @@
                   },
               };
 
-              guardar(data);
+              guardar2(data);
+              console.log(data);
             }
         });
     }
 
-    function guardar(json){
+    function guardar2(json){
         $.ajax({
             // la URL para la petición
             url : urlServidor + 'rol/guardar',

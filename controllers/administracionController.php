@@ -6,4 +6,16 @@ class AdministracionController{
         include_once 'views/contents/representante.php';
     }
 
+    public function docentes(){
+        include_once 'views/contents/listarDocente.php';
+    }
+
+    public function insumos(){
+        include_once 'views/contents/insumosLibros.php';
+    }
+
+    public function estudiante(){
+        include_once 'views/contents/estudiante.php';
+    }
+
 }

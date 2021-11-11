@@ -3,12 +3,12 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0">Gestión Representante</h1>
+                <h1 class="m-0">Listar Representantes</h1>
             </div><!-- /.col -->
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Administración</a></li>
-                    <li class="breadcrumb-item active">Gestión Representante</li>
+                    <li class="breadcrumb-item active">Listar Representantes</li>
                 </ol>
             </div><!-- /.col -->
         </div><!-- /.row -->
@@ -21,111 +21,8 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <div class="card card-purple">
+                <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Nuevo Representante</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
-                                    class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                        <!-- /.card-tools -->
-                    </div>
-                    <!--form-nuevo-descripcion /.card-header -->
-                    <div class="card-body">
-                        <div class="row text-right">
-                            <div class="col-12 p-2">
-                                <button class="btn btn-dark" id="buscar-cliente-venta" data-toggle="modal"
-                                    data-target="#modal-representantes" data-backdrop="static" data-keyboard="false"><i
-                                        class="fas fa-search mr-2"></i>Buscar Representante</button>
-                            </div>
-                        </div>
-                        <form method="POST" id="form-datos-representante">
-
-                            <div class="row">
-                                <div class="col-6 form-group">
-                                    <input type="hidden" id="form-repre-id">
-                                    <input type="hidden" id="form-persona-id">
-                                    <label for="">Cédula</label>
-                                    <input type="text" class="form-control solo-numeros" placeholder="Cédula"
-                                        id="form-cedula" name="cedula" maxlength="10" minlength="10" required>
-                                </div>
-
-                                <div class="col-6 form-group">
-                                    <label for="">Teléfono</label>
-                                    <input type="text" class="form-control solo-numeros" placeholder="Teléfono"
-                                        id="form-telefono" name="telefono" maxlength="10" minlength="10">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 form-group">
-                                    <label for="">Nombres</label>
-                                    <input type="text" class="form-control solo-letras" placeholder="Nombres"
-                                        id="form-nombres" maxlength="150" minlength="3" name="nombres" required>
-                                </div>
-
-                                <div class="col-6 form-group">
-                                    <label for="">Apellidos</label>
-                                    <input type="text" class="form-control solo-letras" placeholder="Apellidos"
-                                        id="form-apellidos" maxlength="150" minlength="3" name="apellido">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6 form-group">
-                                    <label for="">Correo</label>
-                                    <input type="email" class="form-control" placeholder="Correo" id="form-correo"
-                                        name="correo">
-                                </div>
-                                <div class="col-6 form-group">
-                                    <label for="">Sexo</label>
-                                    <select name="" id="form-sexo" class="form-control">
-                                        <option value="0">Seleccione una opcion</option>
-                                        <option value="M">Masculino</option>
-                                        <option value="F">Femenino</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="">Parentesco</label>
-                                        <select id="form-select-parentesco" class="form-control">
-                                            <!-- <option value="0">Seleccione un Parentesco</option> -->
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="form-group">
-                                        <label for="">Especial</label>
-                                        <select id="form-select-especial" class="form-control">
-                                            <!-- <option value="0">Seleccione una Opción</option> -->
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 form-group">
-                                    <label for="">Fecha de Nacimiento</label>
-                                    <input type="date" class="form-control" placeholder="Fecha de Nacimiento"
-                                        id="form-fecha-nac">
-                                </div>
-                            </div>
-                            <div class="form-group text-center">
-                                <button type="submit" class="btn btn-purple" id="btn-form-representante">
-                                    <i class="fa fa-plus mr-2"></i>
-                                    Agregar Representante
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header" style="background-color: #343a40; color: #fff;">
                         <h3 class="card-title">Lista de Representantes</h3>
 
                         <div class="card-tools">
@@ -175,7 +72,7 @@
 <div class="modal fade" id="modal-representantes">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-purple">
+            <div class="modal-header bg-primary">
                 <h4 class="modal-title">Representantes</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -244,7 +141,7 @@
 <div class="modal fade" id="actualizar_representante">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header bg-purple">
+            <div class="modal-header bg-primary">
                 <h4 class="modal-title">Actualizar Representante</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -324,7 +221,7 @@
                     </form>
                     <div class="row">
                         <div class="col-12">
-                            <button id="btn-update" class="btn btn-purple"><i
+                            <button id="btn-update" class="btn btn-primary"><i
                                     class="fas fa-pencil-alt mr-2"></i>Actualizar</button>
                         </div>
                     </div>

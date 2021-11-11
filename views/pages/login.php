@@ -1,7 +1,7 @@
-<body class="hold-transition login-page">
+<body class="hold-transition login-page fon">
 <div class="login-box">
   <!-- /.login-logo -->
-  <div class="card" style="width: 24rem;">
+  <div class="card" style="width: 20rem; height:23rem">
     <div class="img-logo">
         <img src="<?=BASE?>views/dist/img/logo.jpg" class="card-img-top" alt="...">
     </div>
@@ -42,7 +42,7 @@
                       Iniciar sesion</button>
              </div>
              
-            <div class="col-12 col-sm-6">
+            <!-- <div class="col-12 col-sm-6">
                 <button type="submit" class="btn btn-primary btn-block c-f">
                 <i class="fab fa-facebook-f mr-2"></i>
                     Facebook
@@ -54,7 +54,7 @@
                 <i class="fab fa-twitter mr-2"></i>
                     Twitter
                 </button>
-            </div>
+            </div> -->
         </div>
       </form>
     </div>

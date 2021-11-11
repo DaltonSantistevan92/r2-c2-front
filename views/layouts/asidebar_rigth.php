@@ -16,7 +16,7 @@
       <!-- Anything you want -->
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; <?=date('Y')?> <a href="<?=BASE?>"><?=APLICACION?></a>.</strong> Todos los derechos reservados.
+    <strong> &copy; <?=date('Y')?> <a href="<?=BASE?>"><?=APLICACION?></a>.</strong> Todos los derechos reservados.
   </footer>
 </div>
 <!-- ./wrapper -->

@@ -1,23 +1,24 @@
-/* $(function(){  */
+/* $(function(){ */
 
     _init();
 
     function _init(){
         cargarTabla();
-        recuperarParentesco();
-        recuperarEspecial();
-        actualizar_representante();
+        recuperarPeriodo();
+        recuperarCurso();
+        recuperarParalelo();
+        actualizar_docente();
     }
 
     function cargarTabla(){
-        tabla = $('#tabla-representante').DataTable({
+        tabla = $('#tabla-docente').DataTable({
             "lengthMenu": [ 5, 10, 25, 75, 100],//mostramos el menú de registros a revisar
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
             "ajax":
                 {
-                    url:  urlServidor + 'representante/datatable',
+                    url:  urlServidor + 'docentecurso/datatable',
                     type : "get",
                     dataType : "json",						
                     error: function(e){
@@ -76,84 +77,88 @@
         });
     }
 
-    function actualizar_representante(){
+    function actualizar_docente(){
         $('#btn-update').click(function(){
-            let id = $('#upd-repre-id').val();
-            let persona_id = $('#upd-persona-id').val();
-            let parentesco_id = $('#upd-select-parentesco option:selected').val();
-            let especial_id = $('#upd-select-especial option:selected').val();
+            let id = $('#docentecurso-id').val();
+            let docente_id = $('#docente-id').val();
+            let curso_id = $('#upd-curso option:selected').val();
+            let paralelo_id = $('#upd-paralelo option:selected').val();
+            let periodo_id = $('#upd-periodo option:selected').val();
             let nombres = $('#upd-nombres').val();
             let apellidos = $('#upd-apellidos').val();
-            let telefono = $('#upd-telefono').val();
-            let correo = $('#upd-correo').val();
-            let fecha_nac = $('#upd-fecha-nac').val();
-            let sexo = $('#upd-sexo option:selected').val();
+           
             
-            if(persona_id.length == 0){
+            if(curso_id.length == 0){
                 toastr.options = {
                     "closeButton": true,
                     "preventDuplicates": true,
                     "positionClass": "toast-top-center",
                 };
 
-                toastr["error"]("Seleccione una persona", "Campo vacío")
+                toastr["error"]("Seleccione un curso", "Campo vacío")
                 // alert("campo rol vacio");
             }else 
-            if(parentesco_id.length == 0){
+            if(paralelo_id.length == 0){
                 toastr.options = {
                     "closeButton": true,
                     "preventDuplicates": true,
                     "positionClass": "toast-top-center",
                 };
 
-                toastr["error"]("Seleccione un parentesco", "Campo vacío")
+                toastr["error"]("Seleccione un paralelo", "Campo vacío")
                 // alert("campo rol vacio");
             }else
-            if(especial_id.length == 0){
+            if(periodo_id.length == 0){
                 toastr.options = {
                     "closeButton": true,
                     "preventDuplicates": true,
                     "positionClass": "toast-top-center",
                 };
 
-                toastr["error"]("Seleccione un especial", "Campo vacío")
+                toastr["error"]("Seleccione un periodo", "Campo vacío")
                 // alert("campo rol vacio");
             }else
-            if(fecha_nac.length == 0){
+            if(nombres.length == 0){
                 toastr.options = {
                     "closeButton": true,
                     "preventDuplicates": true,
                     "positionClass": "toast-top-center",
                 };
 
-                toastr["error"]("Ingrese una fecha de nacimiento", "Campo vacío")
+                toastr["error"]("Ingrese un nombre", "Campo vacío")
                 // alert("campo rol vacio");
             }
-            else{
+            else
+            if(apellidos.length == 0){
+                toastr.options = {
+                    "closeButton": true,
+                    "preventDuplicates": true,
+                    "positionClass": "toast-top-center",
+                };
+
+                toastr["error"]("Ingrese un apellido", "Campo vacío")
+                // alert("campo rol vacio");
+            }else
+            {
                 let data = {
-                    representante: {
+                    docentecurso: {
                         id: id,
-                        persona_id: persona_id, 
-                        parentesco_id: parentesco_id,
-                        especial_id: especial_id,
-                        fecha_nac: fecha_nac,
+                        periodo_id: periodo_id,
+                        docente_id: docente_id, 
+                        curso_id: curso_id,
+                        paralelo_id: paralelo_id,
                         nombres: nombres,
                         apellidos: apellidos,
-                        telefono: telefono,
-                        correo: correo,
-                        sexo: sexo
                     },
                 };
-                console.log(data);
 
                 $.ajax({
                     // la URL para la petición
-                    url : urlServidor + 'representante/editar',
+                    url : urlServidor + 'docentecurso/editar',
                     type : 'POST',
                     data: {data: JSON.stringify(data)},
                     dataType : 'json',
                     success : function(response){
-                        console.log(response);
                         if(response.status){
                             toastr.options = {
                                 "closeButton": true,
@@ -163,7 +168,7 @@
                 
                             toastr["success"](response.mensaje, "Listo !")
 
-                            $('#actualizar_representante').modal('hide');
+                            $('#actualizar_docente').modal('hide');
                             cargarTabla();
                         }else{
                             toastr.options = {
@@ -185,37 +190,42 @@
             }
         })
     }
-/* });  */
 
-function editar_representante(id){
-    $('#actualizar_representante').modal('show');
-    cargar_representante(id);
+/* }); */
+
+function editar_docenteCurso(id){
+    $('#actualizar_docente').modal('show');
+    cargar_docente(id);
 }
 
-function cargar_representante(id){
+function cargar_docente(id){
     $.ajax({
         // la URL para la petición
-        url : urlServidor + 'representante/listar/' + id,
+        url : urlServidor + 'docentecurso/listar/' + id,
         // especifica si será una petición POST o GET
         type : 'GET',
         // el tipo de información que se espera de respuesta
         dataType : 'json',
-        success : function(response) {
-       
-            if(response.status){
-                console.log(response);
-                $('#upd-repre-id').val(response.representante.id);
-                $('#upd-persona-id').val(response.persona.id);
-                $('#upd-cedula').val(response.persona.cedula);
-                $('#upd-nombres').val(response.persona.nombres);
-                $('#upd-apellidos').val(response.persona.apellidos);
-                $('#upd-telefono').val(response.persona.telefono);
-                $('#upd-correo').val(response.persona.correo);
-                $('#upd-fecha-nac').val(response.representante.fecha_nac);
-                $('#upd-sexo').val(response.persona.sexo);
-                $('#upd-select-parentesco').val(response.representante.parentesco_id);
-                $('#upd-select-especial').val(response.representante.especial_id);
-            }
+        success : function(response) {   
+             if(response.status){     
+                let nombres = response.data.docente.persona.nombres;
+                let apellidos = response.data.docente.persona.apellidos;
+                let curso = response.data.curso.id;
+                let periodo_id = response.data.periodo.id;
+                let paralelo = response.data.paralelo.id;
+                let docentecurso = response.data.docente.docentecurso[0].id;
+                let docente = response.data.docente.id;
+                let persona_id = response.data.docente.persona.id;
+
+                $('#per-id').val(persona_id);
+                $('#docentecurso-id').val(docentecurso);
+                $('#docente-id').val(docente);
+                $('#upd-nombres').val(nombres);
+                $('#upd-apellidos').val(apellidos);
+                $('#upd-curso').val(curso);
+                $('#upd-paralelo').val(paralelo);
+                $('#upd-periodo ').val(periodo_id);
+            } 
         },
         error : function(jqXHR, status, error) {
             console.log('Disculpe, existió un problema');
@@ -226,44 +236,19 @@ function cargar_representante(id){
     });
 }
 
-function recuperarParentesco(){
+function recuperarPeriodo(){
     $.ajax({
-        url : urlServidor + 'parentesco/listar',
-        type : 'GET',
-        dataType : 'json',
-        success : function(response) {
-            if(response.status){
-                let option = '<option value=0>Seleccione un Rol</option>';
-                
-                response.parentesco.forEach(element =>{
-                    option += `<option value=${element.id}>${element.detalle}</option>`;
-                });
-                $('#upd-select-parentesco').html(option);
-
-            }   
-        },
-        error : function(xhr, status) {
-            console.log('Disculpe, existió un problema');
-        },
-        complete : function(xhr, status) {
-            // console.log('Petición realizada');
-        }
-    });
-}
-
-function recuperarEspecial(){
-    $.ajax({
-        url : urlServidor + 'especial/listar',
+        url : urlServidor + 'periodo/listar',
         type : 'GET',
         dataType : 'json',
         success : function(response) {
             if(response.status){
                 let option = '<option value=0>Seleccione una Opción</option>';
                 
-                response.especial.forEach(element =>{
-                    option += `<option value=${element.id}>${element.descripcion}</option>`;
+                response.data.forEach(element =>{
+                    option += `<option value=${element.id}>${element.detalle}</option>`;
                 });
-                $('#upd-select-especial').html(option);
+                $('#upd-periodo').html(option);
 
             }   
         },
@@ -276,39 +261,65 @@ function recuperarEspecial(){
     });
 }
 
-function seleccionar_representante(id){
-    let fila = '#fila-representante-'+id;
-    let f = $(fila)[0].children;
-    console.log(f);
-    
-    let cedula = f[2].innerText;
-    let telefono = f[5].innerText;
-    let nombres = f[3].innerText;
-    let apellidos = f[4].innerText;
-    let correo = f[6].innerText;
-    let sexo = f[7].innerText;
-    let per_id = f[8].innerText;
+function recuperarCurso(){
+    $.ajax({
+        url : urlServidor + 'curso/listar',
+        type : 'GET',
+        dataType : 'json',
+        success : function(response) {
+            if(response.status){
+                let option = '<option value=0>Seleccione un Curso</option>';
+                
+                response.data.forEach(element =>{
+                    option += `<option value=${element.id}>${element.curso}</option>`;
+                });
+                $('#upd-curso').html(option);
 
-    $('#form-repre-id').val(id);
-    $('#form-cedula').val(cedula);
-    $('#form-telefono').val(telefono);
-    $('#form-nombres').val(nombres);
-    $('#form-apellidos').val(apellidos);
-    $('#form-correo').val(correo);
-    $('#form-sexo').val(sexo);
-    $('#form-persona-id').val(per_id);
+            }   
+        },
+        error : function(xhr, status) {
+            console.log('Disculpe, existió un problema');
+        },
+        complete : function(xhr, status) {
+            // console.log('Petición realizada');
+        }
+    });
 }
 
-function eliminar(id){
+function recuperarParalelo(){
+    $.ajax({
+        url : urlServidor + 'paralelo/listar',
+        type : 'GET',
+        dataType : 'json',
+        success : function(response) {
+            if(response.status){
+                let option = '<option value=0>Seleccione un Paralelo</option>';
+                
+                response.data.forEach(element =>{
+                    option += `<option value=${element.id}>${element.detalle}</option>`;
+                });
+                $('#upd-paralelo').html(option);
+
+            }   
+        },
+        error : function(xhr, status) {
+            console.log('Disculpe, existió un problema');
+        },
+        complete : function(xhr, status) {
+            // console.log('Petición realizada');
+        }
+    });
+}
+
+function eliminar_docenteCurso(id){
     let data = {
-        representante: {
+        docentecurso: {
             id: id,
         }
     };
-
     $.ajax({
         // la URL para la petición
-        url : urlServidor + 'representante/eliminar/',
+        url : urlServidor + 'docentecurso/eliminar',
         // especifica si será una petición POST o GET
         type : 'POST',
         // el tipo de información que se espera de respuesta
@@ -322,7 +333,7 @@ function eliminar(id){
                     "positionClass": "toast-top-center",
                 };
     
-                toastr["success"]("Se Ha eliminado el representante del sistema", "Representante")
+                toastr["success"]("Se Ha eliminado el docente del sistema", "Docente")
                 cargarTabla();
             }
         },
@@ -334,3 +345,6 @@ function eliminar(id){
         }
     });
 }
+
+
+

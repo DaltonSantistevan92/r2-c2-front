@@ -10,6 +10,12 @@
         cargarTabla();
         cargarRol();
         actualizar_usuario();
+        cargarDatosDocente();
+        cargarPeriodo();
+        cargarCurso();
+        cargarParalelo();
+        cargarParentesco();
+        cargarEspecial();
     }
 
     function cargarRoles(){
@@ -25,6 +31,81 @@
                         option += `<option value=${element.id}>${element.rol}</option>`;
                     });
                     $('#form-select-rol').html(option);
+   
+                }   
+            },
+            error : function(xhr, status) {
+                console.log('Disculpe, existió un problema');
+            },
+            complete : function(xhr, status) {
+                // console.log('Petición realizada');
+            }
+        });
+    }
+
+    function cargarPeriodo(){
+        $.ajax({
+            url : urlServidor + 'periodo/listar',
+            type : 'GET',
+            dataType : 'json',
+            success : function(response) {
+                if(response.status){
+                    let option = '<option value=0>Seleccione un Periodo</option>';
+                    
+                    response.data.forEach(element =>{
+                        option += `<option value=${element.id}>${element.detalle}</option>`;
+                    });
+                    $('#form-select-periodo').html(option);
+   
+                }   
+            },
+            error : function(xhr, status) {
+                console.log('Disculpe, existió un problema');
+            },
+            complete : function(xhr, status) {
+                // console.log('Petición realizada');
+            }
+        });
+    }
+
+    function cargarCurso(){
+        $.ajax({
+            url : urlServidor + 'curso/listar',
+            type : 'GET',
+            dataType : 'json',
+            success : function(response) {
+                if(response.status){
+                    let option = '<option value=0>Seleccione un Curso</option>';
+                    
+                    response.data.forEach(element =>{
+                        option += `<option value=${element.id}>${element.curso}</option>`;
+                    });
+                    $('#form-select-curso').html(option);
+   
+                }   
+            },
+            error : function(xhr, status) {
+                console.log('Disculpe, existió un problema');
+            },
+            complete : function(xhr, status) {
+                // console.log('Petición realizada');
+            }
+        });
+    }
+
+    function cargarParalelo(){
+        $.ajax({
+            url : urlServidor + 'paralelo/listar',
+            type : 'GET',
+            dataType : 'json',
+            success : function(response) {
+                if(response.status){
+                    let option = '<option value=0>Seleccione un Paralelo</option>';
+                    
+                    response.data.forEach(element =>{
+                        option += `<option value=${element.id}>${element.detalle}</option>`;
+                    });
+                    $('#form-select-paralelo').html(option);
    
                 }   
             },
@@ -90,6 +171,14 @@
            let correo = $('#form-correo').val();
            let sexo = $('#form-sexo option:selected').val();
            let def = (foto == undefined) ? 'default.jpg' : foto.name;
+           //docente
+           let curso_id = $('#form-select-curso option:selected').val();
+           let paralelo_id = $('#form-select-paralelo option:selected').val();
+           let periodo_id = $('#form-select-periodo option:selected').val();
+           //representante
+           let parentesco_id = $('#form-select-parentesco option:selected').val();
+           let especial_id = $('#form-select-especial option:selected').val();
+           let fecha_nac = $('#form-fecha-nac').val();
 
            let json = {
                usuario: {
@@ -97,6 +186,14 @@
                },
                persona: {
                    cedula,nombres,apellidos,telefono,correo,sexo
+               },
+               docente: { 
+               },
+               docentecurso:{
+                   periodo_id,curso_id,paralelo_id
+               },
+               representante:{
+                parentesco_id,especial_id,fecha_nac
                }
            };
 
@@ -275,6 +372,14 @@
                     $('#form-datos-persona')[0].reset();
                     $('#form-datos-usuario')[0].reset();
                     cargarTabla();
+                }else{
+                    toastr.options = {
+                        "closeButton": true,
+                        "preventDuplicates": true,
+                        "positionClass": "toast-top-center",
+                    };
+    
+                    toastr["error"](response.mensaje, "Usuario")
                 }
              },
              error : function(jqXHR, status, error) {
@@ -313,6 +418,14 @@
                         };
             
                         toastr["success"](responseImg.mensaje, "Usuario")
+                    }else{
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                            "positionClass": "toast-top-center",
+                        };
+            
+                        toastr["error"](responseImg.mensaje, "Usuario")
                     }
                 },
                 error : function(jqXHR, status, error) {
@@ -468,6 +581,75 @@
             }
         })
     }
+
+    function cargarDatosDocente(){
+        $('#form-select-rol').change(function(){
+            let rol_id = $('#form-select-rol option:selected').val();
+
+            if(rol_id == '1'){
+                $('#datos-docente').addClass('d-none');
+                $('#datos-representante').addClass('d-none');
+            }else
+            if(rol_id == '2'){
+                $('#datos-docente').removeClass('d-none');
+                $('#datos-representante').addClass('d-none');
+            }else
+            if(rol_id == '3'){
+                $('#datos-docente').addClass('d-none');
+                $('#datos-representante').removeClass('d-none');
+            }
+        });
+    }
+
+    function cargarParentesco(){
+        $.ajax({
+            url : urlServidor + 'parentesco/listar',
+            type : 'GET',
+            dataType : 'json',
+            success : function(response) {
+                if(response.status){
+                    let option = '<option value=0>Seleccione un Parentesco</option>';
+                    
+                    response.parentesco.forEach(element =>{
+                        option += `<option value=${element.id}>${element.detalle}</option>`;
+                    });
+                    $('#form-select-parentesco').html(option);
+   
+                }   
+            },
+            error : function(xhr, status) {
+                console.log('Disculpe, existió un problema');
+            },
+            complete : function(xhr, status) {
+                // console.log('Petición realizada');
+            }
+        });
+    }
+
+    function cargarEspecial(){
+        $.ajax({
+            url : urlServidor + 'especial/listar',
+            type : 'GET',
+            dataType : 'json',
+            success : function(response) {
+                if(response.status){
+                    let option = '<option value=0>Seleccione una Opción</option>';
+                    
+                    response.especial.forEach(element =>{
+                        option += `<option value=${element.id}>${element.descripcion}</option>`;
+                    });
+                    $('#form-select-especial').html(option);
+   
+                }   
+            },
+            error : function(xhr, status) {
+                console.log('Disculpe, existió un problema');
+            },
+            complete : function(xhr, status) {
+                // console.log('Petición realizada');
+            }
+        });
+    }
 /* }); */
 
 function editar_usuario(id){
@@ -565,4 +747,3 @@ function eliminar(id){
         }
     });
 }
-

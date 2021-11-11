@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-6">
-                <div class="card card-purple">
+                <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title">Nuevo Rol</h3>
 
@@ -46,7 +46,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-purple" id="btn-form-rol">
+                                <button type="submit" class="btn btn-primary" id="btn-form-rol">
                                     <i class="fa fa-plus mr-2"></i>
                                     Agregar Rol
                                 </button>
@@ -159,4 +159,4 @@
 </div>
 
 <script src="<?=BASE?>views/plugins/Toast/js/Toast.min.js"></script>
-<script src="<?=BASE?>views/dist/js/scripts/roles.js?ver=1.1.1.1"></script>
+<script src="<?=BASE?>views/dist/js/scripts/roles.js?ver=1.1.1.2"></script>

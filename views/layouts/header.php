@@ -18,6 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <!-- Mis estilos -->
   <link rel="stylesheet" href="<?=BASE?>views/dist/css/style.css?ver=1.1.1.2">
+  <link rel="stylesheet" href="<?=BASE?>views/dist/css/login.css">
 
   <!-- dataTables -->
   <link rel="stylesheet" href="<?=BASE?>views/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">    
