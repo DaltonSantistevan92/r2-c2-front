@@ -333,7 +333,7 @@
     function generarCodigo(){
         $.ajax({
             // la URL para la petición
-            url : urlServidor + 'ticket/getOrden',
+            url : urlServidor + 'ticket/getOrden/ticket',
             // especifica si será una petición POST o GET
             type : 'GET',
             // el tipo de información que se espera de respuesta
@@ -359,6 +359,7 @@
         let json = {
             orden: {
                 num_orden: num_orden,
+                tipo: 'ticket'
             }
         }
 
