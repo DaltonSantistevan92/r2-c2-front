@@ -9,7 +9,7 @@
         cargarProductos();
         agregarItem();
         form_abastecimiento();
-        validarCajas();
+        //validarCajas();
         generarCodigo();
         buscarProductos();
     }
@@ -89,6 +89,7 @@
                             <td>${element.categoria.detalle}</td>
                             <td>${element.peso}</td>
                             <td style="display: none">${element.img}</td>
+                            <td style="display: none">${element.categoria.id}</td>
                             <td>
                                 <div class="div text-center">
                                     <button data-dismiss="modal" class="btn btn-primary btn-sm" onclick="seleccionar_producto(${element.id})">
@@ -134,6 +135,7 @@
                                 <td>${element.categoria.detalle}</td>
                                 <td>${element.peso}</td>
                                 <td style="display: none">${element.img}</td>
+                                <td style="display: none">${element.categoria.id}</td>
                                 <td>
                                     <div class="div text-center">
                                         <button data-dismiss="modal" class="btn btn-primary btn-sm" onclick="seleccionar_producto(${element.id})">
@@ -230,7 +232,6 @@
                     reset();
                     $('#form-nuevo-producto')[0].reset();
                     $('#form-nuevo-proveedor')[0].reset();
-                    $('#form-nuevo-abastecimiento')[0].reset();
                 }else{
                     toastr.options = {
                         "closeButton": true,
@@ -257,13 +258,20 @@
     }
 
     function validarCajas(){
+            $('#form-producto-caja').keyup(function(){
+                let cajas = $('#form-producto-caja').val();
+              
+                let cajaxuni = 24;
+                let cajatotal = cajas * cajaxuni;
+                $('#form-producto-stock').val(cajatotal)
+            });   
+    }
+
+    function noValidarCajas(){
         $('#form-producto-caja').keyup(function(){
-            let cajas = $('#form-producto-caja').val();
-            
-            let cajaxuni = 24;
-            let cajatotal = cajas * cajaxuni;
-            $('#form-producto-stock').val(cajatotal)
-        });
+            $('#form-producto-caja').val();
+            $('#form-producto-stock').val(0)
+        });   
     }
 
     function agregarItem(){
@@ -318,6 +326,8 @@
                 </tr>`;
 
                 $('#items-productos').append(tr);
+                $('#form-producto-caja').val(0);
+                $('#form-producto-stock').val(0);
             }
         });
     }
@@ -385,7 +395,7 @@ function seleccionar_producto(id){
     let categoria = f[3].innerText;
     let peso = f[4].innerText;
     let imagen = f[5].innerText;
-
+    let categoria_id = f[6].innerText;
     let img = (imagen != 'default_product.jpg') ? urlServidor + 'resources/productos/' + imagen : urlServidor + 'resources/productos/default_product.jpg' ;
 
     $('#prod-id').val(id);
@@ -393,7 +403,20 @@ function seleccionar_producto(id){
     $('#form-producto-peso').val(peso);
     $('#form-producto-categoria').val(categoria);
     $('#form-producto-img').attr('src',img);
-
+    $('#categoria_id').val(categoria_id);
+    
+    if(categoria_id == 1){ //insumo
+        $('#ocultar-peso').removeClass('d-none');
+        $('#form-producto-stock').attr("readOnly", true);
+        validarCajas();
+    }else
+    if( categoria_id == 2){//libro
+        $('#ocultar-peso').addClass('d-none');
+        $('#form-producto-stock').attr("readOnly", false);
+        $('#form-producto-caja').val(0);
+        $('#form-producto-stock').val(0);
+        noValidarCajas(); 
+    } 
 }
 
 function borrar_item(id){

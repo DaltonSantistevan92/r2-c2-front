@@ -113,11 +113,11 @@
                                     <div class="form-group">
                                         <input type="hidden" id="prod-id">
                                         <label for="">Nombre</label>
-                                        <input type="text" class="form-control solo-letras" readOnly placeholder="Nombre"
-                                            id="form-producto-nombre">
+                                        <input type="text" class="form-control solo-letras" readOnly
+                                            placeholder="Nombre" id="form-producto-nombre">
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6" id="ocultar-peso">
                                     <div class="form-group">
                                         <label for="">Peso</label>
                                         <input type="text" class="form-control" readOnly placeholder="Peso"
@@ -128,8 +128,10 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
+                                        <input type="hidden" id="categoria_id">
                                         <label for="">Categoría</label>
-                                        <input id="form-producto-categoria" type="text" readOnly class="form-control" placeholder="Categoría">
+                                        <input id="form-producto-categoria" type="text" readOnly class="form-control"
+                                            placeholder="Categoría">
                                     </div>
                                 </div>
                                 <div class="col-6 border">
@@ -199,9 +201,9 @@
                                 </div>
                             </div>
 
-                             <div class="form-group text-right">
+                            <div class="form-group text-right">
                                 <button type="submit" class="btn btn-primary" id="btn-form-rol">
-                                    <i class="fa fa-plus mr-2"></i>
+                                    <i class="fas fa-box-open mr-2"></i>
                                     Guardar Proceso
                                 </button>
                             </div>
@@ -251,6 +253,7 @@
                                         <th>Categoría</th>
                                         <th>Peso</th>
                                         <th style="display: none">Imagen</th>
+                                        <th style="display: none">ID_CATEGORIA</th>
                                         <th>OK</th>
                                     </tr>
                                 </thead>
