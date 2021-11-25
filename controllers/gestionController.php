@@ -9,4 +9,12 @@ class GestionController{
     public function usuarios(){
         include_once 'views/contents/usuarios.php';
     }
+
+    public function abastecimiento(){
+        include_once 'views/contents/abastecimiento.php';
+    }
+
+    public function entrega(){
+        include_once 'views/contents/entrega.php';
+    }
 }

@@ -4,11 +4,15 @@
 
     function _init(){
         cargarCategorias();
-        cargarTabla();
+        cargarTablaInsumos();
+        cargarTablaLibros();
         form_producto();
         actualizar_producto();
         recuperarCategorias();
         cargarDatosFecha();
+        //validarCajas();
+        //actualizarCajas();
+        previewImg();
     }
 
     function cargarCategorias(){
@@ -35,15 +39,82 @@
         });
     }
 
-    function cargarTabla(){
-        tabla = $('#tabla-productos').DataTable({
+    function cargarTablaInsumos(){
+        tabla = $('#tabla-insumos').DataTable({
             "lengthMenu": [ 5, 10, 25, 75, 100],//mostramos el menú de registros a revisar
             "responsive": true, "lengthChange": false, "autoWidth": false,
             "aProcessing": true,//Activamos el procesamiento del datatables
             "aServerSide": true,//Paginación y filtrado realizados por el servidor
             "ajax":
                 {
-                    url:  urlServidor + 'producto/datatable',
+                    url:  urlServidor + 'producto/dataTableInsumo',
+                    type : "get",
+                    dataType : "json",						
+                    error: function(e){
+                        console.log(e.responseText);	
+                    }
+                },
+            destroy: true,
+            "iDisplayLength": 4,//Paginación
+            "language": {
+ 
+			    "sProcessing":     "Procesando...",
+			 
+			    "sLengthMenu":     "Mostrar _MENU_ registros",
+			 
+			    "sZeroRecords":    "No se encontraron resultados",
+			 
+			    "sEmptyTable":     "Ningún dato disponible en esta tabla",
+			 
+			    "sInfo":           "Mostrando un total de _TOTAL_ registros",
+			 
+			    "sInfoEmpty":      "Mostrando un total de 0 registros",
+			 
+			    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+			 
+			    "sInfoPostFix":    "",
+			 
+			    "sSearch":         "Buscar:",
+			 
+			    "sUrl":            "",
+			 
+			    "sInfoThousands":  ",",
+			 
+			    "sLoadingRecords": "Cargando...",
+			 
+			    "oPaginate": {
+			 
+			        "sFirst":    "Primero",
+			 
+			        "sLast":     "Último",
+			 
+			        "sNext":     "Siguiente",
+			 
+			        "sPrevious": "Anterior"
+			 
+			    },
+			 
+			    "oAria": {
+			 
+			        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+			 
+			        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+			 
+			    }
+
+			   }//cerrando language
+        });
+    }
+
+    function cargarTablaLibros(){
+        tabla = $('#tabla-libros').DataTable({
+            "lengthMenu": [ 5, 10, 25, 75, 100],//mostramos el menú de registros a revisar
+            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "aProcessing": true,//Activamos el procesamiento del datatables
+            "aServerSide": true,//Paginación y filtrado realizados por el servidor
+            "ajax":
+                {
+                    url:  urlServidor + 'producto/dataTableLibro',
                     type : "get",
                     dataType : "json",						
                     error: function(e){
@@ -109,8 +180,8 @@
             let nombre = $('#form-producto-nombre').val();
             let categoria_id = $('#form-producto-categoria option:selected').val();
             let peso = $('#form-producto-peso').val();
-            let stock = $('#form-producto-stock').val();
             let descripcion = $('#form-producto-descripcion').val();
+            let imagen = $('#form-img-producto')[0].files[0];
             let fecha_caducidad = $('#form-producto-fecha-caduca').val();
 
             if(nombre.length == 0){
@@ -142,34 +213,47 @@
 
                 toastr["error"]("Ingrese un peso", "Campo vacío")
                 // alert("campo rol vacio");
-            }else
-            if(stock.length == 0){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                    "positionClass": "toast-top-center",
-                };
-
-                toastr["error"]("Ingrese un stock", "Campo vacío")
-                // alert("campo rol vacio");
             }
             else{
-              let data = {
-                  producto: {
+              let json = {
                       categoria_id: categoria_id,
                       nombre: nombre, 
                       peso: peso,
-                      stock: stock,
                       descripcion: descripcion,
+                      img: imagen,
                       fecha_caducidad: fecha_caducidad
-                  },
-              };
-              guardar_producto(data);
+                }
+                let formdata = new FormData();
+              if(imagen == undefined){
+                json.img = 'default_product.jpg';
+              //  formdata.append('producto',json);
+                }else{
+                    //subir archivo
+                    if(imagen.type == 'image/jpeg'  || imagen.type == 'image/jpg' || imagen.type == 'image/png'){
+                        json.img = imagen.name;
+                        
+                        guardar_producto(json,imagen);
+                    }else{         
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                            "positionClass": "toast-top-center",
+                        };
+        
+                        toastr["error"]('Tipo de archivo no admitido!', "Productos")
+                    }
+                }  
+              
             }
         });
     }
 
-    function guardar_producto(json){
+    function guardar_producto(data,imagen){
+        let json = {
+            producto: data
+        }
+        let formdata = new FormData();
+        formdata.append('fichero',imagen);
         $.ajax({
             // la URL para la petición
             url : urlServidor + 'producto/guardar',
@@ -189,7 +273,31 @@
     
                     toastr["success"]("El producto se ha guardado correctamente", "Productos")
                     $('#form-nuevo-producto')[0].reset();
-                    cargarTabla();
+                    cargarTablaInsumos();
+                    cargarTablaLibros();
+
+                    $.ajax({
+                        // la URL para la petición
+                        url : urlServidor + 'producto/subir',
+                        data : formdata,
+                        contentType: false,
+                        processData: false, 
+                        // especifica si será una petición POST o GET
+                        type : 'POST',
+                        // el tipo de información que se espera de respuesta
+                        dataType : 'json',
+                        success : function(responseImg) {
+                            //console.log(responseImg);
+                        },
+                        error : function(jqXHR, status, error) {
+                            console.log('Disculpe, existió un problema');
+                        },
+                        complete : function(jqXHR, status) {
+                            // console.log('Petición realizada');
+                        }
+                    }); 
+              
+                    $('#img-preview-producto').attr('src',urlServidor + 'resources/productos/default_product.jpg');
                 }else{
                     toastr.options = {
                         "closeButton": true,
@@ -197,7 +305,7 @@
                         "positionClass": "toast-top-center",
                     };
     
-                    toastr["error"](response.mensaje, "Rol")
+                    toastr["error"](response.mensaje, "Productos")
                 }
                 //console.log(response);
             },
@@ -216,11 +324,9 @@
             let nombre = $('#upd-nombre').val();
             let categoria_id = $('#upd-categoria option:selected').val();
             let peso = $('#upd-peso').val();
-            let stock = $('#upd-stock').val();
             let descripcion = $('#upd-descripcion').val();
             let fecha_caducidad = $('#upd-fecha-caduca').val();
 
-            
             if(nombre.length == 0){
                 toastr.options = {
                     "closeButton": true,
@@ -250,34 +356,14 @@
 
                 toastr["error"]("Ingrese un peso", "Campo vacío")
                 // alert("campo rol vacio");
-            }else
-            if(stock.length == 0){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                    "positionClass": "toast-top-center",
-                };
-
-                toastr["error"]("Ingrese un stock", "Campo vacío")
-                // alert("campo rol vacio");
-            }else
-            if(fecha_caducidad.length == 0){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                    "positionClass": "toast-top-center",
-                };
-
-                toastr["error"]("Ingrese una fecha de caducidad", "Campo vacío")
-                // alert("campo rol vacio");
-            }else{
+            }
+            else{
                 let data = {
                     producto: {
                         id: id,
                         categoria_id: categoria_id,
                         nombre: nombre, 
                         peso: peso,
-                        stock: stock,
                         descripcion: descripcion,
                         fecha_caducidad: fecha_caducidad
                     },
@@ -301,7 +387,8 @@
                             toastr["success"]("El producto se ha actualizado correctamente", "Productos")
 
                             $('#actualizar_insumo').modal('hide');
-                            cargarTabla();
+                            cargarTablaInsumos();
+                            cargarTablaLibros();
                         }else{
                             toastr.options = {
                                 "closeButton": true,
@@ -329,12 +416,53 @@
 
             if(categoria_id == '1'){
                 $('#data-fecha-cad').removeClass('d-none');
+                $('#producto-data-peso').removeClass('d-none'); 
+                $('#form-producto-peso').val(''); 
             }else
             if(categoria_id == '2'){
-                $('#data-fecha-cad').addClass('d-none');            
+                $('#data-fecha-cad').addClass('d-none');  
+                $('#form-producto-peso').val(0); 
+                $('#producto-data-peso').addClass('d-none');           
             } 
             
         });
+    }
+
+    function validarCajas(){
+        $('#form-producto-caja').keyup(function(){
+            let cajas = $('#form-producto-caja').val();
+            
+            let cajaxuni = 24;
+            let cajatotal = cajas * cajaxuni;
+            $('#form-producto-stock').val(cajatotal)
+        });
+    }
+
+    function actualizarCajas(){
+        $('#upd-caja').keyup(function(){
+            let cajas = $('#upd-caja').val();
+            
+            let cajaxuni = 24;
+            let cajatotal = cajas * cajaxuni;
+            $('#upd-stock').val(cajatotal)
+        });
+    }
+
+    function previewImg(){
+        $('#form-img-producto').change(function(){
+            readImage(this);
+            $('#img-preview-producto').removeClass('d-none');
+        });
+    }
+
+    function readImage(input) {
+        if (input.files && input.files[0]) {
+          var reader = new FileReader();
+          reader.onload = function (e) {
+              $('#img-preview-producto').attr('src', e.target.result); // Renderizamos la imagen
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
     }
 // });
 
@@ -357,6 +485,7 @@ function cargar_insumo(id){
                 $('#prod-id').val(response.producto.id);
                 $('#upd-nombre').val(response.producto.nombre);
                 $('#upd-peso').val(response.producto.peso);
+                $('#upd-caja').val(response.producto.caja);
                 $('#upd-stock').val(response.producto.stock);
                 $('#upd-descripcion').val(response.producto.descripcion);
                 $('#upd-fecha-caduca').val(response.producto.fecha_caducidad);
@@ -365,8 +494,10 @@ function cargar_insumo(id){
                 id =response.producto.categoria.id;
                 if(id == 1){
                     $('#upd-data-fecha').removeClass('d-none');
+                    $('#upd-data-peso').removeClass('d-none');
                 }else{
                     $('#upd-data-fecha').addClass('d-none');
+                    $('#upd-data-peso').addClass('d-none');
                 }
             }
         },
