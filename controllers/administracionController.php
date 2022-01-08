@@ -18,4 +18,8 @@ class AdministracionController{
         include_once 'views/contents/estudiante.php';
     }
 
+    public function materia(){
+        include_once 'views/contents/listarMateria.php';
+    }
+
 }
