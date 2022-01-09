@@ -6,8 +6,8 @@ function _init() {
     getPeridos();
     getParalelos();
     form_horario();
-    cargarTabla();
-
+    // cargarTabla();
+    changeSelectPeriodo();
 }
 
 function clearForm() {
@@ -44,6 +44,8 @@ function getPeridos() {
         .then(data => {
             if (data.data.length > 0) {
                 const select = document.getElementById('horario-select-periodo');
+                const selectPeriodo = document.getElementById('select-periodo');
+                
                 let option = `<option value="0">Seleccione una opción</option>`;
 
                 data.data.forEach(element => {
@@ -51,6 +53,7 @@ function getPeridos() {
                 });
 
                 select.innerHTML = option;
+                selectPeriodo.innerHTML = option;
             }
         });
 }
@@ -175,7 +178,7 @@ function form_horario() {
 
 }
 
-function cargarTabla(){
+function cargarTabla(periodo_id){
     tabla = $('#tabla-horario').DataTable({
         "lengthMenu": [ 5, 10, 25, 75, 100],//mostramos el menú de registros a revisar
         "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -183,7 +186,7 @@ function cargarTabla(){
         "aServerSide": true,//Paginación y filtrado realizados por el servidor
         "ajax":
             {
-                url:  urlServidor + 'horario/datatable',
+                url:  urlServidor + 'horario/datatable/'+periodo_id,
                 type : "get",
                 dataType : "json",						
                 error: function(e){
@@ -239,6 +242,15 @@ function cargarTabla(){
             }
 
            }//cerrando language
+    });
+}
+
+function changeSelectPeriodo(){
+    const select = document.getElementById('select-periodo');
+
+    select.addEventListener('change', (event) => {
+        if(event.target.value != '0' || event.target.value !== 0)
+            cargarTabla(event.target.value);
     });
 }
 

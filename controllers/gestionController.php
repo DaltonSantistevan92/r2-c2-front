@@ -22,5 +22,7 @@ class GestionController{
         include_once 'views/contents/nuevoHorario.php';
     }
 
-
+    public function docente_materia(){
+        include_once 'views/contents/docente_materia.php';
+    }
 }

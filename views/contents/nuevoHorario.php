@@ -20,13 +20,19 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <button class="btn btn-dark" data-toggle="modal" data-target="#modal-nuevo-horario"
                     data-backdrop="static" data-keyboard="false">Nuevo Horario
                 </button>
+                <a class="btn btn-dark" href="<?=BASE?>gestion/docente_materia" 
+                    data-backdrop="static" data-keyboard="false">Asignar docente-materia
+                </a>
+                <button class="btn btn-dark"
+                    data-backdrop="static" data-keyboard="false">Periodos y otros
+                </button>
             </div>
 
-            <div class="col-5 form-group">
+            <div class="col-5 form-group mt-2">
                 <label for="">Periodo</label>
                 <select id="select-periodo" class="form-control">
                     <option value="0">Seleccione una opcíon</option>
@@ -60,7 +66,7 @@
                                 </thead>
                                 <tbody>
 
-                                    </tfoot>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -75,8 +81,6 @@
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-
 
 <!-- Modal de nuevo Horario -->
 
