@@ -42,7 +42,7 @@
 
                                 <div class="col-12 form-group">
                                     <label for="">Color de la materia</label>
-                                    <input type="color" class="form-control" id="materia-color" name="color">
+                                    <input type="color" class="form-control" id="materia-color" name="color"> 
                                 </div>
 
                                 <div class="col-12 form-group">
@@ -68,7 +68,7 @@
                         <h5 class="m-0">Lista de Materias</h5>
                     </div>
                     <div class="card-body">
-                        <table class="table t-hover">
+                        <table id="tabla-materias" class="table t-hover">
                             <thead class="bg-primary">
                                 <tr>
                                     <th scope="col">#</th>
@@ -78,14 +78,14 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <!-- <tr>
                                     <th scope="row">1</th>
                                     <td>Mark</td>
                                     <td>@mdo</td>
                                     <td>
                                         <button class="btn btn-danger btn-small">X</button>
                                     </td>
-                                </tr>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -98,5 +98,15 @@
 </div>
 <!-- /.content -->
 </div>
+
+
+<script src="<?=BASE?>views/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="<?=BASE?>views/plugins/jszip/jszip.min.js"></script>
+<script src="<?=BASE?>views/plugins/pdfmake/pdfmake.min.js"></script>
 
 <script src="<?= BASE ?>views/dist/js/scripts/listarMateria.js"></script>
