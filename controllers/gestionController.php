@@ -17,4 +17,10 @@ class GestionController{
     public function entrega(){
         include_once 'views/contents/entrega.php';
     }
+
+    public function horario(){
+        include_once 'views/contents/nuevoHorario.php';
+    }
+
+
 }
