@@ -23,7 +23,7 @@
             <div class="col-12 col-md-4 col-lg-3">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="m-0">Nueva Materia</h5>
+                        <h5 class="m-0">Nueva Asingnacíon</h5>
                     </div>
 
                     <div class="card-body">
@@ -44,8 +44,8 @@
                             </div>
 
                             <div class="col-12 d-flex mb-3">
-                                <input type="hidden">
-                                <input type="text" class="form-control" placeholder="Docente" readonly>
+                                <input type="hidden" id="dm-docente-id">
+                                <input type="text" class="form-control" placeholder="Docente" readonly id="dm-docente-texto">
                                 <button class="btn btn-sm btn-primary" id="btn-modal-docente">
                                     <i class="fas fa-search"></i>
                                 </button>

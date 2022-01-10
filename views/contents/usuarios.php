@@ -142,6 +142,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="row">
                                                 <div class="col-12">
                                                     <div class="form-group">
@@ -151,7 +152,7 @@
                                                 </div>
                                             </div>
                                             <div class="row d-none" id="datos-docente">
-                                                <div class="col-4">
+                                                <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="form-group">
                                                         <label for="">Período</label>
                                                         <select id="form-select-periodo" class="form-control">
@@ -159,7 +160,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="form-group">
                                                         <label for="">Curso</label>
                                                         <select id="form-select-curso" class="form-control">
@@ -167,11 +168,23 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
+                                                <div class="col-12 col-md-6 col-lg-4">
                                                     <div class="form-group">
                                                         <label for="">Paralelo</label>
                                                         <select id="form-select-paralelo" class="form-control">
                                                             <!-- <option value="0">Seleccione un Rol</option> -->
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 col-md-6 col-lg-4">
+                                                    <div class="form-group">
+                                                        <label for="">Cargo</label>
+                                                        <select id="form-select-cargo" class="form-control">
+                                                            <option value="0">Seleccione una opción</option>
+                                                            <option value="S">Docente Guia</option>
+                                                            <option value="N">Docente de clases</option>
+                                                            <option value="A">Ambos</option>
                                                         </select>
                                                     </div>
                                                 </div>

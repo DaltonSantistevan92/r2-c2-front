@@ -179,10 +179,11 @@
            let parentesco_id = $('#form-select-parentesco option:selected').val();
            let especial_id = $('#form-select-especial option:selected').val();
            let fecha_nac = $('#form-fecha-nac').val();
+           let guia = $('#form-select-cargo').val();
 
            let json = {
                usuario: {
-                   rol_id,clave,confclave,foto: def
+                   rol_id,clave,confclave,foto: def, guia
                },
                persona: {
                    cedula,nombres,apellidos,telefono,correo,sexo
@@ -327,6 +328,12 @@
     }
 
     function validarUsuario(usuario){
+        toastr.options = {
+            "closeButton": true,
+            "preventDuplicates": true,
+            "positionClass": "toast-top-center",
+        };
+
         if(usuario.length == 0){
             return false;
         }else
@@ -337,13 +344,11 @@
             return false;
         }else
         if(usuario.clave !== usuario.confclave){
-            toastr.options = {
-                "closeButton": true,
-                "preventDuplicates": true,
-                "positionClass": "toast-top-center",
-            };
-
-            toastr["error"]("Las claves no coinciden", "Claves")
+            toastr["error"]("Las claves no coinciden", "Claves");
+            return false;
+        }else
+        if(usuario.guia == '0' || usuario.guia == 0){
+            toastr["error"]("Seleccione un cargo", "Usuario");
             return false;
         }
         else{

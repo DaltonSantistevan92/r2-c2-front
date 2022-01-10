@@ -13,6 +13,17 @@ function _init(){
     loadTableMaterias(AREA_ID);
     changeSelectArea();
     openModalDocente();
+    getDocentes();
+    reset();
+}
+
+function reset(){
+    document.getElementById('dm-materia-id').value = '';
+    document.getElementById('dm-materia-texto').value = '';
+
+    document.getElementById('dm-docente-id').value = '';
+    document.getElementById('dm-docente-texto').value = '';
+
 }
 
 function getPeridos() {
@@ -85,8 +96,48 @@ function asignar(){
     const btn_asingar = document.getElementById('btn-asingar');
 
     btn_asingar.addEventListener('click', () => {
-        console.log("Recoger la data y armar json");
+
+        // reset();
+
+        const json = {
+            periodo_id: document.getElementById('select-periodo').value,
+            docente_id: document.getElementById('dm-docente-id').value,
+            materia_id: document.getElementById('dm-materia-id').value,
+            grado_id: document.getElementById('select-grado').value,
+            paralelo_id: document.getElementById('select-paralelo').value
+        }
+
+        if(validar(json)){
+            console.log(json);
+        }
     });
+
+    function validar(data){
+        toastr.options = {
+            "closeButton": true,
+            "preventDuplicates": true,
+            "positionClass": "toast-top-center",
+        };
+
+        if(data.periodo_id == '0' || data.periodo_id == 0){
+
+            toastr["error"]("Seleciones un periodo", "Información");
+            return false;
+        }else if(data.materia_id == "" ){
+            toastr["error"]("Selecione una materia", "Información");
+            return false;
+        }else if(data.docente_id == ""){
+            toastr["error"]("Selecione un docente", "Información");
+            return false;
+        }else if(data.grado_id == '0' || data.grado_id == 0){
+            toastr["error"]("Selecione un grado", "Información");
+            return false;
+        }else if(data.paralelo_id == '0' || data.paralelo_id == 0){
+            toastr["error"]("Selecione un paralelo", "Información");
+            return false;
+        }
+        else return true;
+    }
 }
 
 function getAreas(){
@@ -105,6 +156,35 @@ function getAreas(){
             });
 
             select.innerHTML = option;
+        }
+    });
+}
+
+function getDocentes(){
+    const url = urlServidor + 'docente/listar';
+
+    fetch(url)
+    .then(response => response.json())
+    .then(data => {
+        if (data.status) {
+            let tr = '';
+            const tbody = document.getElementById('table-modal-docente');
+
+            data.docente.forEach((element, index) => {
+                tr += `<tr>
+                    <th scope="row">${index + 1}</th>
+                    <td>${element.persona.cedula}</td>
+                    <td>${element.persona.nombres}</td>
+                    <td>${element.persona.apellidos}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-dark" onclick="selectDocente(${element.id}, '${element.persona.nombres}', '${element.persona.apellidos}' )">
+                            <i class="fas fa-check"></i>
+                        </button>
+                    </td>
+                </tr>`;
+            });
+
+            tbody.innerHTML = tr;
         }
     });
 }
@@ -186,8 +266,6 @@ function selectMateria(materia_id){
     .then(data => {
        
         if (data.status) {
-            console.log(data);   
-
             input_materia_id = document.getElementById('dm-materia-id');
             input_materia_texto = document.getElementById('dm-materia-texto'); 
 
@@ -199,7 +277,13 @@ function selectMateria(materia_id){
     $('#modalMateria').modal('hide');
 }
 
-function selectDocente(docente_id){
-    console.log(docente_id);
+function selectDocente(docente_id, nombres, apellidos){
+
+    const input_id =  document.getElementById('dm-docente-id');
+    const input_text =  document.getElementById('dm-docente-texto');
+
+    input_id.value = docente_id;
+    input_text.value = nombres + ' ' + apellidos;
+
     $('#modalDocente').modal('hide');
 }
