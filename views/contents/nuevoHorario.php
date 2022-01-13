@@ -24,12 +24,12 @@
                 <button class="btn btn-dark" data-toggle="modal" data-target="#modal-nuevo-horario"
                     data-backdrop="static" data-keyboard="false">Nuevo Horario
                 </button>
-                <a class="btn btn-dark" href="<?=BASE?>gestion/docente_materia" 
-                    data-backdrop="static" data-keyboard="false">Asignar docente-materia
+                <a class="btn btn-dark" href="<?=BASE?>gestion/docente_materia" data-backdrop="static"
+                    data-keyboard="false">Asignar docente-materia
                 </a>
-                <button class="btn btn-dark"
-                    data-backdrop="static" data-keyboard="false">Periodos y otros
-                </button>
+                <a class="btn btn-dark" href="<?=BASE?>gestion/periodos" data-backdrop="static"
+                    data-keyboard="false">Periodos y otros
+                </a>
             </div>
 
             <div class="col-5 form-group mt-2">

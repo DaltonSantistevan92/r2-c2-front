@@ -255,7 +255,8 @@ function changeSelectPeriodo(){
 }
 
 function configuraciones(id){
-    alert(id);
+    localStorage.setItem('_id_horario', id);
+    window.location.href = urlCliente + 'gestion/base';
 }
 
 function eliminar_horario(id){

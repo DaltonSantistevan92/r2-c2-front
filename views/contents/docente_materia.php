@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 col-md-4 col-lg-3">
-                <div class="card">
+                <div class="card card-dark">
                     <div class="card-header">
                         <h5 class="m-0">Nueva Asingnacíon</h5>
                     </div>
@@ -76,9 +76,9 @@
             </div>
 
             <div class="col-12 col-md-8 col-lg-9">
-                <div class="card">
+                <div class="card card-dark">
                     <div class="card-header">
-                        <h5 class="m-0">Nueva Asignación</h5>
+                        <h5 class="m-0">Listar Asignación</h5>
                     </div>
 
                     <div class="card-body">
@@ -104,39 +104,30 @@
                             </div>
 
                             <div class="col-12 col-md-2 col-lg-2">
-                                <button class="btn btn-sm btn-primary" style="margin-top: 33px;">
-                                    <i class="fas fa-check"></i>
+                                <button id="btn-consultar" class="btn btn-sm btn-primary" style="margin-top: 35px;">
+                                    <i class="fas fa-search mr-2"></i>Consultar
                                 </button>
                             </div>
                         </div>
 
-                        <div class="row">
-                            <table class="table t-hover">
-                                <thead class="bg-primary">
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Docente</th>
-                                        <th scope="col">Materia</th>
-                                        <th scope="col">Grado</th>
-                                        <th scope="col">Paralelo</th>
-                                        <th scope="col">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>@mdo</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-danger">
-                                                X
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="row d-none" id="tb-asig">
+                            <div class="col-12">
+                                <table class="table t-hover table-bordered" id="tabla-asignacion">
+                                    <thead class="bg-primary">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Docente</th>
+                                            <th scope="col">Materia</th>
+                                            <th scope="col">Grado</th>
+                                            <th scope="col">Paralelo</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,7 +141,7 @@
 <div class="modal fade" id="modalMateria" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalMateriaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-primary">
                 <h5 class="modal-title" id="modalMateriaLabel">Materias disponibles</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -179,21 +170,11 @@
                                             <th scope="col">Area</th>
                                             <th scope="col">Materia</th>
                                             <th scope="col">Duración</th>
-                                            <th scope="col"></th>
+                                            <th scope="col">OK</th>
                                         </tr>
                                     </thead>
                                     <tbody id="table-modal-materia">
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                            <td>
-                                                <button class="btn btn-sm btn-outline-dark" onclick="selectMateria(1)">
-                                                    <i class="fas fa-check"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -212,8 +193,8 @@
 <div class="modal fade" id="modalDocente" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalMateriaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalMateriaLabel">Materias disponibles</h5>
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title" id="modalMateriaLabel">Docentes disponibles</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -221,7 +202,7 @@
             <div class="modal-body">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-12 col-md-6">
+                        <div class="col-12 col-md-12">
                             <div class="form-group">
                                 <label for="">Buscar docente</label>
                                 <input type="text" class="form-control" id="txt-buscar-docente">
@@ -239,7 +220,7 @@
                                             <th scope="col">Cedula</th>
                                             <th scope="col">Nombres</th>
                                             <th scope="col">Apellidos</th>
-                                            <th scope="col"></th>
+                                            <th scope="col">OK</th>
                                         </tr>
                                     </thead>
                                     <tbody id="table-modal-docente">
@@ -268,4 +249,13 @@
     </div>
 </div>
 
-<script src="<?= BASE ?>views/dist/js/scripts/docente_materia.js"></script>
+<script src="<?=BASE?>views/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="<?=BASE?>views/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="<?=BASE?>views/plugins/jszip/jszip.min.js"></script>
+<script src="<?=BASE?>views/plugins/pdfmake/pdfmake.min.js"></script>
+
+<script src="<?= BASE ?>views/dist/js/scripts/docente_materia.js?ver=1.1.1.1"></script>

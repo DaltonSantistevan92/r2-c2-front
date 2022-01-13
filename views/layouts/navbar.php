@@ -176,8 +176,8 @@
                                         <form method="POST" id="form-nuevo-periodo">
                                             <div class="form-group">
                                                 <label for="">Periodo</label>
-                                                <input type="text" class="form-control" placeholder="Ejemplo: 2021"
-                                                    id="form-periodo">
+                                                <input type="text" class="form-control solo-numeros" placeholder="Ejemplo: 2021"
+                                                    id="form-periodo" minlength="4" maxlength="4">
                                             </div>
 
                                             <div class="form-group">
