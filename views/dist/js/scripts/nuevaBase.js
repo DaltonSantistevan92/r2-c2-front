@@ -12,40 +12,28 @@ $(function(){
         reset_horas();
         cargarHoras();
         cargarDias();
+        getBases();
+        btnEstablecer();
+        changeDetalleBaSe();
     }
 
-    function cargarTabla(){
+    function getBases(){
         $.ajax({
-            url : urlServidor + 'rol/listar',
+            url : urlServidor + 'base/listar',
             type : 'GET',
             dataType : 'json',
             success : function(response) {
+                let option = '<option value="0">Seleccione una opción</option>';
+                const select = document.getElementById('select-base');
+                select.innerHTML = '';
+
                 if(response.status){
-                    let tr = "";    let i = 1;
-
-                    response.roles.forEach(element => {
-                        tr += `<tr>
-                        <td>${i}</td>
-                        <td>${element.rol}</td>
-                        <td>
-                          <div><button class="btn btn-primary btn-sm" onclick="editar(${element.id})">
-                              <i class="fa fa-edit"></i>
-                            </button>
-                          </div>
-                        </td>
-
-                        <td>
-                          <div><button class="btn btn-dark btn-sm" onclick="eliminar(${element.id})">
-                              <i class="fa fa-trash"></i>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>`;
-                        i++;
+                    response.base.forEach((element) => {
+                        option +=  `<option value="${element.id}">${element.nombre}</option>`;
                     });
-
-                    $('#table-roles').html(tr);
                 }
+
+                select.innerHTML = option;
             },
             error : function(xhr, status) {
                 console.log('Disculpe, existió un problema');
@@ -56,52 +44,99 @@ $(function(){
         });
     }
 
-    function guardarNuevaBase(){
-        $('#btn-crear-nombre-base').click(function() {
+    function changeDetalleBaSe(){
+        const select = document.getElementById('select-base');
 
-            let nombre = $('#form-nombre-base').val();
-            let horario_id = localStorage.getItem('_id_horario');
+        select.addEventListener('change', (event) => {
+            const base_id = event.target.value;
 
-            if(detalle.length == 0){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                    "positionClass": "toast-top-center",
-                };
-
-                toastr["error"]("Ingrese un período", "Campo vacío")
-            }else
-            if(desde.length == 0){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                    "positionClass": "toast-top-center",
-                };
-
-                toastr["error"]("Seleccione una fecha desde", "Campo vacío")
-            }else
-            if(hasta.length == 0){
-                toastr.options = {
-                    "closeButton": true,
-                    "preventDuplicates": true,
-                    "positionClass": "toast-top-center",
-                };
-
-                toastr["error"]("Seleccione una fecha hasta", "Campo vacío")
-            }
-            else{
-              let data = {
-                  periodo: {
-                      detalle: detalle, 
-                      desde: desde,
-                      hasta: hasta
-                  },
-              };
-
-              //console.log(data);
-              guardar_periodo(data);
+            if(base_id != '0' || base_id != 0){
+                console.log("BASE ID", base_id);
+                console.log("Cargar los detales filtrados por el horario id en la tabla");
             }
         });
+    }
+
+    function guardarNuevaBase(){
+        $('#btn-crear-nombre-base').click(function() {
+            toastr.options = {
+                "closeButton": true,
+                "preventDuplicates": true,
+                "positionClass": "toast-top-center",
+            };
+
+            let nombre = $('#form-nombre-base').val();
+
+            if(nombre.length == 0 || nombre.length <= 3){
+                toastr["error"]("Ingrese el nombre de la base", "Información")
+            }else{
+                let json = { nombre: nombre, estado: 'A'};
+               
+                $.ajax({
+                    // la URL para la petición
+                    url : urlServidor + 'base/guardar',
+                    data : "data=" + JSON.stringify({ base: json }),
+                    // especifica si será una petición POST o GET
+                    type : 'POST',
+                    // el tipo de información que se espera de respuesta
+                    dataType : 'json',
+                    success : function(response) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                            "positionClass": "toast-top-center",
+                        };
+            
+                        if(response.status){
+                            toastr["success"]("El período se ha guardado correctamente", "Períodos y Otros")
+                            $('#form-nombre-base').val('');
+                        }else{
+                            toastr["error"](response.mensaje, "Períodos y Otros")
+                        }
+                        //console.log(response);
+                    },
+                    error : function(jqXHR, status, error) {
+                        console.log('Disculpe, existió un problema');
+                    },
+                    complete : function(jqXHR, status) {
+                        // console.log('Petición realizada');
+                    }
+                });
+            }
+        });
+    }
+
+    function btnEstablecer(){
+        const btn = document.getElementById('btn-establecer');
+
+        btn.addEventListener('click', () => {
+            toastr.options = {
+                "closeButton": true,
+                "preventDuplicates": true,
+                "positionClass": "toast-top-center",
+            };
+
+            const base_id = document.getElementById('select-base').value;
+            const hora_id = document.getElementById('select-horas-base').value;
+
+            let json = { base_id, hora_id, estado: 'A' };
+
+            if(base_id == '0' || base_id == 0){
+                toastr["warning"]("Seleccione una base", "Base");
+            }else
+            if(hora_id == '0' || base_id == 0){
+                toastr["warning"]("Seleccione una hora", "Base");
+            }else{
+                console.log(json);
+                console.log("Guardar el detalle_base");
+            }
+
+            getDetalleBase();
+        });
+
+        function getDetalleBase(){
+            console.log('Cargar los detalles de ese horario');
+        }
     }
 
     function guardar_periodo(json){
@@ -301,7 +336,7 @@ $(function(){
             type: 'GET',
             dataType: 'json',
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 if (response.status) {
                     $('#form-dias')
                 }

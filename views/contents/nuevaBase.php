@@ -19,7 +19,7 @@
 <!-- Main content -->
 <div class="content">
     <div class="container-fluid">
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-12">
                 <div class="row">
                     <div class="col-5">
@@ -35,7 +35,8 @@
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
+
         <div class="row mt-3">
             <div class="col-12 col-md-6 col-lg-4">
                 <div class="card card-dark">
@@ -68,14 +69,16 @@
             <div class="col-12 col-md-6 col-lg-8">
                 <div class="card card-dark">
                     <div class="card-header">
-                        <h5 class="m-0">Establecer Bases</h5>
+                        <h5 class="m-0">Asignar horas</h5>
                     </div>
 
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-12 col-md-5 col-lg-3">
-                                <label for="">Nombre</label>
-                                <input type="text" class="form-control form-control-sm" id="form-nombre-base" placeholder="Nombre">
+                                <label for="">Bases disponibles</label>
+                                <select id="select-base" class="form-control form-control-sm">
+                                    <!-- <option value="0">Seleccione una hora</option> -->
+                                </select>
                             </div>
 
                             <div class="col-12 col-md-5 col-lg-3">
@@ -85,33 +88,41 @@
                                 </select>
                             </div>
 
-                            <div class="col-12 col-md-5 col-lg-3">
-                                <label for="">Días</label>
-                                <input type="text" class="form-control form-control-sm" readonly id="form-dias" placeholder="Días">
-                            </div>
-
                             <div class="col-12 col-md-2 col-lg-3">
-                                <button id="btn-consultar" class="btn btn-sm btn-primary" style="margin-top: 33px;">
+                                <button id="btn-establecer" class="btn btn-sm btn-primary" style="margin-top: 33px;">
                                     <i class="far fa-calendar-check mr-2"></i>Establecer
                                 </button>
                             </div>
                         </div>
 
-                        <div class="row d-none" id="tb-asig">
+                        <div class="row" id="tb-asig">
                             <div class="col-12">
                                 <table class="table t-hover table-bordered" id="tabla-asignacion">
                                     <thead class="bg-primary">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Docente</th>
-                                            <th scope="col">Materia</th>
-                                            <th scope="col">Grado</th>
-                                            <th scope="col">Paralelo</th>
+                                            <th>Base</th>
+                                            <th scope="col">Días </th>
+                                            <th scope="col">H. Inicio</th>
+                                            <th scope="col">H. Fin</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Primero</td>
+                                            <td>Lunes a Viernes</td>
+                                            <td>8:30</td>
+                                            <td>9:30</td>
+                                            <td>
+                                                <div class="text-center">
+                                                    <button class="btn-sm btn btn-outline-dark" id="btn-delete-tr-detalle">
+                                                    <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

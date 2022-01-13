@@ -24,6 +24,11 @@
                 <button class="btn btn-dark" data-toggle="modal" data-target="#modal-nuevo-horario"
                     data-backdrop="static" data-keyboard="false">Nuevo Horario
                 </button>
+
+                <a class="btn btn-dark" href="<?=BASE?>gestion/base_nueva"
+                    data-backdrop="static" data-keyboard="false">Nuevo Base
+                </a>
+
                 <a class="btn btn-dark" href="<?=BASE?>gestion/docente_materia" data-backdrop="static"
                     data-keyboard="false">Asignar docente-materia
                 </a>
