@@ -73,6 +73,7 @@ function form_materia() {
                         };
 
                         toastr["info"](data.mensaje, "Listo")
+                        cargarTabla();
                     } else {
                         toastr.options = {
                             "closeButton": true,
@@ -232,6 +233,4 @@ function eliminar_materia(id){
             // console.log('Petición realizada');
         }
     });
-
-
 }

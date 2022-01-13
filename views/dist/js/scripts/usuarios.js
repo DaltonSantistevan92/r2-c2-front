@@ -170,7 +170,7 @@
            let telefono = $('#form-telefono').val();
            let correo = $('#form-correo').val();
            let sexo = $('#form-sexo option:selected').val();
-           let def = (foto == undefined) ? 'default.jpg' : foto.name;
+           let def = (foto == undefined) ? 'user-default.jpg' : foto.name;
            //docente
            let curso_id = $('#form-select-curso option:selected').val();
            let paralelo_id = $('#form-select-paralelo option:selected').val();
@@ -189,6 +189,7 @@
                    cedula,nombres,apellidos,telefono,correo,sexo
                },
                docente: { 
+                   guia
                },
                docentecurso:{
                    periodo_id,curso_id,paralelo_id
@@ -395,7 +396,7 @@
             }
         });
 
-        if(json.usuario.img == 'default.jpg'){
+        if(json.usuario.img == 'user-default.jpg'){
             
         }else{
             //Enviar imagen al servidor(Backend)

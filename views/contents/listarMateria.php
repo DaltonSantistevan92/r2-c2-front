@@ -21,7 +21,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
-                <div class="card">
+                <div class="card card-dark">
                     <div class="card-header">
                         <h5 class="m-0">Nueva Materia</h5>
                     </div>
@@ -63,7 +63,7 @@
 
             <!-- /.col-md-6 -->
             <div class="col-lg-6">
-                <div class="card">
+                <div class="card card-dark">
                     <div class="card-header">
                         <h5 class="m-0">Lista de Materias</h5>
                     </div>

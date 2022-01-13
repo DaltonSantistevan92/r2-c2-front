@@ -25,4 +25,16 @@ class GestionController{
     public function docente_materia(){
         include_once 'views/contents/docente_materia.php';
     }
+
+    public function periodos(){
+        include_once 'views/contents/periodos_otros.php';
+    }
+
+    public function base(){
+        include_once 'views/contents/gestion_base.php';
+    }
+
+    public function base_nueva(){
+        include_once 'views/contents/nuevaBase.php';
+    }
 }

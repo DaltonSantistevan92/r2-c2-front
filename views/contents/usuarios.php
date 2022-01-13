@@ -1,3 +1,20 @@
+<style>
+.box-img-usuario {
+    width: 85px;
+    height: 90px;
+    overflow: hidden;
+    margin: auto;
+}
+
+.box-img-usuario>img {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.pt-25 {
+    padding-top: 30px !important;
+}
+</style>
 <!-- Content Header (Page header) -->
 <div class="content-header">
     <div class="container-fluid">
