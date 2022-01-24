@@ -139,7 +139,7 @@
 
 <!-- Modal Materia-->
 <div class="modal fade" id="modalMateria" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalMateriaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h5 class="modal-title" id="modalMateriaLabel">Materias disponibles</h5>

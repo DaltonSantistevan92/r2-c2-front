@@ -111,7 +111,7 @@ function asignar(){
         }
 
         if(validar(json)){
-            console.log(json);
+    
             $.ajax({
                 // la URL para la petición
                 url : urlServidor + 'asignaciones/guardar',

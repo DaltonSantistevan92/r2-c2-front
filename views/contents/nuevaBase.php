@@ -108,8 +108,8 @@
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
+                                    <tbody id="tbody-base-hora">
+                                        <!-- <tr>
                                             <td>1</td>
                                             <td>Primero</td>
                                             <td>Lunes a Viernes</td>
@@ -122,7 +122,7 @@
                                                     </button>
                                                 </div>
                                             </td>
-                                        </tr>
+                                        </tr> -->
                                     </tbody>
                                 </table>
                             </div>

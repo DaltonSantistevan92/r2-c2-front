@@ -51,8 +51,48 @@ $(function(){
             const base_id = event.target.value;
 
             if(base_id != '0' || base_id != 0){
-                console.log("BASE ID", base_id);
-                console.log("Cargar los detales filtrados por el horario id en la tabla");
+                // /detalle_base/hora
+                ajaxDetalle(base_id);
+            }
+        });
+    }
+
+
+    function ajaxDetalle(base_id){
+        $.ajax({
+            // la URL para la petición
+            url : urlServidor + '/detalle_base/hora/' + base_id,
+            type : 'GET',
+            dataType : 'json',
+            success : function(response) {
+                const table = document.getElementById('tbody-base-hora');
+                let tr = '';
+
+                if(response.length > 0){
+                    response.forEach((element, i) => {
+                        tr += `<tr>
+                            <td>${i + 1}</td>
+                            <td>${element.base.nombre}</td>
+                            <td>Lunes a Viernes</td>
+                            <td>${element.horas.inicio}</td>
+                            <td>${element.horas.fin}</td>
+                            <td>
+                                <div class="text-center">
+                                    <button class="btn-sm btn btn-outline-dark" id="btn-delete-tr-detalle" onclick="deleteHoraBase(${element.id})">
+                                    <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>`;
+                    });
+                }
+                table.innerHTML = tr;
+            },
+            error : function(jqXHR, status, error) {
+                console.log('Disculpe, existió un problema');
+            },
+            complete : function(jqXHR, status) {
+                // console.log('Petición realizada');
             }
         });
     }
@@ -117,26 +157,49 @@ $(function(){
             };
 
             const base_id = document.getElementById('select-base').value;
-            const hora_id = document.getElementById('select-horas-base').value;
+            const horas_id = document.getElementById('select-horas-base').value;
 
-            let json = { base_id, hora_id, estado: 'A' };
+            let json = { base_id, horas_id, estado: 'A' };
 
             if(base_id == '0' || base_id == 0){
                 toastr["warning"]("Seleccione una base", "Base");
             }else
-            if(hora_id == '0' || base_id == 0){
+            if(horas_id == '0' || base_id == 0){
                 toastr["warning"]("Seleccione una hora", "Base");
             }else{
-                console.log(json);
-                console.log("Guardar el detalle_base");
+            
+                $.ajax({
+                    // la URL para la petición
+                    url : urlServidor + 'detalle_base/guardar',
+                    data : "data=" + JSON.stringify({ detalle_base: json }),
+                    // especifica si será una petición POST o GET
+                    type : 'POST',
+                    // el tipo de información que se espera de respuesta
+                    dataType : 'json',
+                    success : function(response) {
+                        toastr.options = {
+                            "closeButton": true,
+                            "preventDuplicates": true,
+                            "positionClass": "toast-top-center",
+                        };
+            
+                        if(response.status){
+                            toastr["success"]("Se asignó la hora a la base", "Base")
+                            ajaxDetalle(base_id);
+                        }else{
+                            toastr["error"](response.mensaje, "Base")
+                        }
+                        //console.log(response);
+                    },
+                    error : function(jqXHR, status, error) {
+                        console.log('Disculpe, existió un problema');
+                    },
+                    complete : function(jqXHR, status) {
+                        // console.log('Petición realizada');
+                    }
+                });
             }
-
-            getDetalleBase();
         });
-
-        function getDetalleBase(){
-            console.log('Cargar los detalles de ese horario');
-        }
     }
 
     function guardar_periodo(json){
@@ -352,3 +415,7 @@ $(function(){
 
 });
 
+
+function deleteHoraBase(baseHora_id){
+    alert("Eliminarlo de " + baseHora_id);
+}
